@@ -16,7 +16,7 @@ The audited app already produced a Vite build; the blockers below affected relia
 - WebGPU is now a candidate until ONNX creates the required hybrid WebGPU/WASM session. Failure creates a new WASM-only processor from the already downloaded model. The UI reports the backend actually in use.
 - Backend initialization has a bounded timeout. A hanging GPU compile offers a reload into explicit CPU mode rather than leaving the UI permanently busy.
 - WASM threads are enabled only under cross-origin isolation. Vite emits ONNX Runtime 1.23.2's matching WASM asset into `dist/assets`.
-- Reduced the guard to 50 MB / three minutes, added 44.1 kHz verification, guaranteed `AudioContext` cleanup, rejected non-finite WAV samples, and releases object URLs on page exit.
+- Set the guard to 50 MB / five minutes, added 44.1 kHz verification, guaranteed `AudioContext` cleanup, rejected non-finite WAV samples, and releases object URLs on page exit.
 - Set Vite `root: web`, `base: /`, and output `../dist`; set Vercel's framework to Vite and added immutable hashed-asset caching plus COOP/COEP security headers.
 - Disabled Vite's SPA fallback because Music Splitter has no client-side routes; missing WASM/assets now return 404 instead of `index.html`.
 - Added `.vercelignore` for unrelated SteamKit and test sources.

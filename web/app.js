@@ -6,7 +6,7 @@ import { loadModel, MODEL_SIZE } from "./model-loader.js";
 ort.env.logLevel = "error";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
-const MAX_DURATION = 3 * 60;
+const MAX_DURATION = 5 * 60;
 const STEMS = ["vocals", "drums", "bass", "other"];
 const forceWasm = new URLSearchParams(location.search).get("backend") === "wasm";
 
@@ -102,7 +102,7 @@ async function separateTrack() {
       await audioContext.close();
     }
 
-    if (decoded.duration > MAX_DURATION) throw new Error("For reliable browser memory use, choose a track under 3 minutes.");
+    if (decoded.duration > MAX_DURATION) throw new Error("This track is longer than the 5-minute browser limit. Choose a shorter track.");
     if (decoded.sampleRate !== CONSTANTS.SAMPLE_RATE) throw new Error("The browser could not resample this track to 44.1 kHz.");
 
     const left = new Float32Array(decoded.getChannelData(0));

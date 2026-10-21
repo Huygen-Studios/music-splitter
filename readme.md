@@ -67,7 +67,7 @@ npx vercel --prod
 
 Browser codec support varies. Current Chrome/Edge reliably handle common MP3 and WAV files; M4A/AAC/OGG/FLAC availability depends on the browser and operating system. Music Splitter reports decode failures and recommends MP3 or WAV instead of silently accepting an unsupported codec.
 
-Music Splitter applies a 50 MB compressed-file guard and a three-minute decoded-duration guard. Compressed size is not a memory estimate: a three-minute job may still need well over 1 GB once the model, decoded input, inference tensors, four stereo stems, and WAV outputs coexist. Start with a short clip, close memory-heavy tabs, and use a 64-bit desktop browser. CPU/WASM can be much slower than WebGPU.
+Music Splitter applies a 50 MB compressed-file guard and a five-minute decoded-duration guard. Compressed size is not a memory estimate: a full-length job may still need well over 1 GB once the model, decoded input, inference tensors, four stereo stems, and WAV outputs coexist. Start with a short clip, close memory-heavy tabs, and use a 64-bit desktop browser. CPU/WASM can be much slower than WebGPU.
 
 Active ONNX inference cannot be safely interrupted through `demucs-web` 1.0.2. Music Splitter therefore prevents concurrent jobs instead of pretending active inference is cancellable.
 
