@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Split music into vocals, drums, bass, and other stems privately in your browser.">
+    <meta name="theme-color" content="#0d1514">
+    <title>Music Splitter — Private music stem splitter</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="nav shell">
+      <a class="brand" href="#top" aria-label="Music Splitter home"><span class="brand-mark" aria-hidden="true">M</span><span>Music Splitter</span></a>
+      <div class="nav-note"><span class="privacy-dot"></span> Your music stays on this device</div>
+    </header>
+
+    <main id="top">
+      <section class="hero shell">
+        <div class="hero-copy-block">
+          <div class="eyebrow"><span></span> Free · private · browser powered</div>
+          <h1>Hear every layer<br><em>inside the song.</em></h1>
+          <p>Separate one track into vocals, drums, bass, and other stems. No account, no upload, no API key—the AI runs locally in your browser.</p>
+          <a class="button ghost" href="#splitter">Split a track ↓</a>
+        </div>
+        <div class="visualizer" aria-hidden="true">
+          <span style="--h:42%"></span><span style="--h:74%"></span><span style="--h:55%"></span><span style="--h:91%"></span>
+          <span style="--h:63%"></span><span style="--h:35%"></span><span style="--h:82%"></span><span style="--h:48%"></span>
+          <span style="--h:69%"></span><span style="--h:94%"></span><span style="--h:58%"></span><span style="--h:77%"></span>
+        </div>
+      </section>
+
+      <section class="splitter-section" id="splitter">
+        <div class="shell workspace">
+          <div class="workspace-heading">
+            <span class="step">01</span>
+            <div><span class="kicker">Choose your audio</span><h2>Drop in a song.</h2></div>
+            <span class="engine-badge" id="engine-badge">Detecting engine…</span>
+          </div>
+
+          <label class="drop-zone" id="drop-zone" for="file-input">
+            <input id="file-input" type="file" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" hidden>
+            <span class="upload-icon" aria-hidden="true">↥</span>
+            <strong>Drop an audio file here</strong>
+            <span>or click to browse · formats supported by your browser · max 50 MB / 3 min</span>
+          </label>
+
+          <div class="model-status" aria-live="polite"><span>AI model</span><strong id="model-state" data-state="idle">Not downloaded</strong></div>
+
+          <article class="source-card" id="source-card" hidden>
+            <div class="source-meta">
+              <span class="disc" aria-hidden="true"><i></i></span>
+              <div><strong id="file-name"></strong><span id="file-details"></span></div>
+            </div>
+            <audio id="source-audio" controls></audio>
+            <button class="button primary" id="separate-button" type="button">Separate this track</button>
+          </article>
+
+          <section class="progress-card" id="progress-card" aria-live="polite" hidden>
+            <div class="progress-top"><span id="progress-stage">Preparing</span><strong id="progress-percent">0%</strong></div>
+            <div class="progress-track"><span id="progress-bar"></span></div>
+            <p id="progress-detail">Getting the browser ready…</p>
+          </section>
+
+          <p class="error-message" id="error-message" role="alert" hidden></p>
+          <button class="button retry-button" id="cpu-retry" type="button" hidden>Reload in CPU mode</button>
+        </div>
+      </section>
+
+      <section class="results-section shell" id="results" hidden>
+        <div class="workspace-heading">
+          <span class="step">02</span>
+          <div><span class="kicker">Separation complete</span><h2>Meet the stems.</h2></div>
+          <span class="elapsed" id="elapsed"></span>
+        </div>
+        <div class="stem-grid" id="stem-grid"></div>
+        <p class="result-note">Downloads are uncompressed stereo WAV files generated locally on this device.</p>
+      </section>
+
+      <section class="how-it-works shell">
+        <div><span class="kicker">What to expect</span><h2>Private by design.</h2></div>
+        <div class="facts">
+          <article><strong>~172 MB</strong><span>Versioned AI model download; Music Splitter caches it when browser storage allows.</span></article>
+          <article><strong>4 stems</strong><span>Vocals, drums, bass, and everything else.</span></article>
+          <article><strong>0 uploads</strong><span>Your original audio never leaves this device.</span></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <a class="brand" href="#top"><span class="brand-mark">M</span><span>Music Splitter</span></a>
+      <p>Powered by Demucs, ONNX Runtime Web, and your own hardware.</p>
+      <span>© <span id="year"></span> Music Splitter</span>
+    </footer>
+  </body>
+</html>

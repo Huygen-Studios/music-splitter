@@ -1,0 +1,10 @@
+SteamKit2/
+Samples/
+Resources/
+.github/
+tests/
+*.sln
+*.slnx
+*.snk
+*.props
+global.json

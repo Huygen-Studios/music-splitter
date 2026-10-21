@@ -120,3 +120,8 @@ Thumbs.db
 
 # Vcpkg
 Resources/NetHook2/NetHook2/vcpkg_installed
+
+# Swara web build output and local Vercel state
+/dist/
+/.vercel/
+/node_modules/
