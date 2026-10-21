@@ -180,7 +180,8 @@ async function initializeProcessor() {
 }
 
 async function createProcessor(backend, model) {
-  ort.env.wasm.numThreads = globalThis.crossOriginIsolated ? Math.min(navigator.hardwareConcurrency || 4, 4) : 1;
+  // shortcut: Vite rewrites ORT's pthread worker URL to the app bundle; revisit after ORT fixes worker URL bundling.
+  ort.env.wasm.numThreads = 1;
   const candidate = new DemucsProcessor({
     ort,
     sessionOptions: {

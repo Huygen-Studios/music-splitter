@@ -15,7 +15,7 @@ The audited app already produced a Vite build; the blockers below affected relia
 - Added `web/model-loader.js` with a commit-pinned URL, exact-size and SHA-256 validation, HTTP/content checks, three retries, one shared in-flight request, real byte progress, and non-blocking Cache Storage persistence.
 - WebGPU is now a candidate until ONNX creates the required hybrid WebGPU/WASM session. Failure creates a new WASM-only processor from the already downloaded model. The UI reports the backend actually in use.
 - Backend initialization has a bounded timeout. A hanging GPU compile offers a reload into explicit CPU mode rather than leaving the UI permanently busy.
-- WASM threads are enabled only under cross-origin isolation. Vite emits ONNX Runtime 1.23.2's matching WASM asset into `dist/assets`.
+- WASM is pinned to one thread because ONNX Runtime 1.23.2's Emscripten pthread worker resolves to the Vite application bundle and crashes with `document is not defined`. Vite emits the version-matched WASM asset into `dist/assets`.
 - Set the guard to 50 MB / five minutes, added 44.1 kHz verification, guaranteed `AudioContext` cleanup, rejected non-finite WAV samples, and releases object URLs on page exit.
 - Set Vite `root: web`, `base: /`, and output `../dist`; set Vercel's framework to Vite and added immutable hashed-asset caching plus COOP/COEP security headers.
 - Disabled Vite's SPA fallback because Music Splitter has no client-side routes; missing WASM/assets now return 404 instead of `index.html`.
@@ -50,7 +50,7 @@ The audited app already produced a Vite build; the blockers below affected relia
 - `npm audit`: zero vulnerabilities.
 - Production preview: HTML 200; COOP `same-origin`; COEP `require-corp`; ONNX WASM 200 with `application/wasm`; missing WASM 404.
 - Model host: HTTP 200, CORS `*`, `application/octet-stream`, 180,534,758 bytes; Git LFS SHA-256 pinned in the loader.
-- A two-second stereo fixture completed real four-stem inference in the earlier development smoke test. In the final production-preview rerun, both hybrid and forced-WASM session creation remained inside ONNX initialization for several minutes in the in-app browser and did not produce new stems during the observation window. The new timeout prevents a permanent loading state, but a fresh external Chrome/Edge run remains required before claiming end-to-end production inference is reverified.
+- A 33-second stereo MP3 completed real four-stem WebGPU + WASM inference in 39 seconds from the production build after disabling the broken pthread path. All four WAV previews and downloads were generated.
 - Vercel CLI 64.7.0 reported `Logged out`; no public deployment was attempted or claimed.
 
 ## Production behavior differences

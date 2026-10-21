@@ -43,7 +43,7 @@ Push this project to your own Git repository, then import it in Vercel with:
 - Output Directory: `dist`
 - Node.js: 20.x or newer
 
-The committed `vercel.json` already contains the build/output settings, immutable asset caching, and the COOP/COEP headers used for multithreaded WASM. No environment variables are required.
+The committed `vercel.json` already contains the build/output settings, immutable asset caching, and COOP/COEP security headers. No environment variables are required.
 
 CLI deployment, after signing in:
 
@@ -60,7 +60,7 @@ npx vercel --prod
 - The cache key includes the model revision. Private browsing or low quota can disable persistent caching; separation still works for that session.
 - ONNX Runtime Web 1.23.2 is bundled with its matching WASM binary by Vite. Missing asset requests are not rewritten to HTML.
 - WebGPU is attempted only in a secure context with an adapter. The model uses ONNX's hybrid WebGPU/WASM provider list because some operators require CPU fallback; a failed hybrid session is discarded and recreated as WASM-only.
-- WASM uses multiple threads only when `crossOriginIsolated` is true; otherwise it uses one thread.
+- WASM currently uses one thread because ONNX Runtime 1.23.2's Emscripten pthread worker resolves to the Vite application bundle and crashes with `document is not defined`. WebGPU remains enabled; CPU-only fallback is slower.
 - Backend initialization is bounded (three minutes for hybrid mode, four for CPU-only) so a driver/runtime hang becomes an actionable error instead of a permanent loading screen.
 
 ## Audio support and limits
